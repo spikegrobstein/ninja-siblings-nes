@@ -19,6 +19,7 @@ clean:
 		ninja-siblings.nes.ram.nl \
 		ninja-siblings.nes.0.nl \
 		ninja-siblings.nes.1.nl \
-		ninja-siblings.chr
+		ninja-siblings.chr \
+		ninja-siblings.nes.dbg
 
 .PHONY:
