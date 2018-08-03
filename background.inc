@@ -18,42 +18,19 @@ setup_background:
       sta $2007
       dex
       bne :-
+    dey
     bne :--
 
-
-  ; draw the floor
-  ; we want 5 layers at the bottom, from row 25-30
-  ; lda #$85 ; #$85 is the brick
-  ; ldy #25
-  ; :
-    ; ldx #0
-    ; :
-      ; pha
-      ; jmp ppu_address_tile
-      ; pla
-      ; sta $2007
-      ; inx
-      ; cpx #32
-      ; bne :-
-    ; iny
-    ; cpy #30
-    ; bne :--
-  ; done drawing floor
-
-  ; set all attributes to 0
-  ldx #64 ; 64 bytes
-  :
-    sta $2007
-    dex
-    bne :-
-
+  jsr draw_floor
 
   ; second nametable, fill with simple pattern
   lda #$24
   sta $2006
   lda #$00
   sta $2006
+
   lda #$00
+
   ldy #30
   :
     ldx #32
@@ -82,6 +59,33 @@ setup_background:
     adc #%01010101
     dey
     bne :--
+  rts
+
+draw_floor:
+  ; draw the floor
+  ; we want 5 layers at the bottom, from row 25-30
+  ldy #25
+  :
+    ldx #0
+    jsr ppu_address_tile
+    lda #$85 ; #$85 is the brick
+    :
+      sta $2007
+      inx
+      cpx #32
+      bcc :-
+    iny
+    cpy #30
+    bne :--
+  ; done drawing floor
+
+  ; set all attributes to 0
+  ldx #64 ; 64 bytes
+  :
+    sta $2007
+    dex
+    bne :-
+
   rts
 
 
